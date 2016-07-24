@@ -9,18 +9,20 @@ Nos = 64
 # Symbol rate relative to carrier
 symbolRate = 0.16
 # The bandwidth off the BP filter rel to symbol rate
-relBW = 0.5
+relBW = 0.52
+# Number of phases
+Nphases = 8
 
 # The temporal axis
 t = np.linspace(0.0, N, num=N*Nos)
 
 # The symbols
-symbols = (np.pi/2.0)*(np.random.random_integers(0, 3, symbolRate*N+1))
+symbols = (2.0*np.pi/Nphases)*(np.random.random_integers(0, Nphases-1, symbolRate*N+1))
 
 # The actual waveform
 x = [np.sin(2.0*np.pi*t[i] + symbols[(i/Nos)*symbolRate]) for i in range(N*Nos)]
 # Add some noise for good measure
-x = x + np.random.normal(loc=0.0, scale=0.6, size=len(x))
+x = x + np.random.normal(loc=0.0, scale=1.0, size=len(x))
 
 # Internal constants for decimation and filtering
 LPorder = (Nos*2)
